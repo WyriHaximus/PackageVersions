@@ -2,13 +2,13 @@
 
 namespace PackageVersionsTest;
 
-use PackageVersions\Versions;
+use PackageVersions\ComposerVersions;
 use PHPUnit_Framework_TestCase;
 
 /**
  * @covers \PackageVersions\Versions
  */
-final class VersionsTest extends PHPUnit_Framework_TestCase
+final class ComposerVersionsTest extends PHPUnit_Framework_TestCase
 {
     public function testValidVersions()
     {
@@ -20,8 +20,8 @@ final class VersionsTest extends PHPUnit_Framework_TestCase
 
         foreach ($packages as $package) {
             self::assertSame(
-                $package['version'] . '@' . $package['source']['reference'],
-                Versions::getVersion($package['name'])
+                $package['version'],
+                ComposerVersions::getVersion($package['name'])
             );
         }
     }
@@ -30,6 +30,6 @@ final class VersionsTest extends PHPUnit_Framework_TestCase
     {
         $this->setExpectedException(\OutOfBoundsException::class);
 
-        Versions::getVersion(uniqid('', true) . '/' . uniqid('', true));
+        ComposerVersions::getVersion(uniqid('', true) . '/' . uniqid('', true));
     }
 }
